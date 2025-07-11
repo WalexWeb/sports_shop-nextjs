@@ -1,7 +1,7 @@
-class PagesConfig {
-  PRODUCT(name: string) {
-    return `/user/${name}`;
-  }
-}
-
-export const PAGES = new PagesConfig();
+export const PAGES = {
+  HOME: "/",
+  CATALOG: "/catalog",
+  PRODUCT(id: number) {
+    return `/catalog/${id}`;
+  },
+};

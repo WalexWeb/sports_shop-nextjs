@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { m } from "framer-motion";
+import { PAGES } from "@/config/pages-class.config";
 
 export default function Products() {
   const pathname = usePathname();
@@ -14,7 +15,7 @@ export default function Products() {
         <h2 className="text-3xl font-bold">Лучшие предложения</h2>
         <div className="flex space-x-4 mt-4 md:mt-0">
           <Link
-            href={"/catalog"}
+            href={PAGES.CATALOG}
             className="px-4 py-2 rounded-full font-medium hover:bg-orange-700 hover:text-white bg-gray-200 text-gray-700"
           >
             Каталог
