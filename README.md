@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sports Shop
 
-## Getting Started
+Современное клиентское приложение интернет-магазина спортивной формы и экипировки
 
-First, run the development server:
+## 🚀 Стек технологий
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Next.js** — фреймворк для создания серверных и статических приложений на React.
+- **TypeScript** — строгая типизация для повышения надежности кода.
+- **Bun** — менеджер пакетов и инструмент для сборки.
+- **Tailwind CSS** — утилитарный CSS-фреймворк для стилизации интерфейса.
+- **Framer Motion** — библиотека для анимаций и плавных переходов.
+- **Zustand** — легковесное управление состоянием приложения.
+- **Axios** — HTTP-клиент для работы с API.
+- **React Icons** — коллекция SVG-иконок для интерфейса.
+- **ESLint + Prettier** — инструменты для линтинга и автоформатирования кода.
+
+## 📁 Структура проекта
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+src/
+  ├── api/                # Запросы к API
+  ├── app/
+  │   ├── App.tsx         # Корневой компонент приложения (React router dom)
+  │   ├── components/     # Общие компоненты (TailwindCSS, framer-motion)
+  │   ├── pages/          #  Страницы сайта
+  │   └── store/          # Zustand store
+  ├── hooks/              # Кастомные хуки
+  ├── types/              # Типы TypeScript для данных и пропсов
+  └── main.tsx            # Точка входа приложения
+```
