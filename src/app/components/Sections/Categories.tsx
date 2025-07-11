@@ -17,12 +17,11 @@ export default function Categories() {
         {categories.map((category, index) => (
           <m.div
             key={category.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
-            whileHover={{ scale: 1.05 }}
-            onHoverStart={() => setHoveredItem(category.id)}
-            onHoverEnd={() => setHoveredItem(null)}
+            whileHover={{ y: -10 }}
             className="relative rounded-xl overflow-hidden shadow-lg bg-white"
           >
             <div className="h-48 bg-gray-200 flex items-center justify-center">

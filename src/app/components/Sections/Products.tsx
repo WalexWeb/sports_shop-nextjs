@@ -55,13 +55,15 @@ export default function Products() {
               </p>
               <div className="flex justify-between items-center">
                 <span className="font-bold text-blue-600">{product.price}</span>
-                <m.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="bg-orange-700 cursor-pointer text-white px-4 py-1 rounded-full text-sm hover:bg-orange-700"
-                >
-                  Смотреть
-                </m.button>
+                <Link href={PAGES.PRODUCT(product.id)} passHref>
+                  <m.a
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="bg-orange-700 cursor-pointer text-white px-4 py-1 rounded-full text-sm hover:bg-orange-700 inline-block"
+                  >
+                    Смотреть
+                  </m.a>
+                </Link>
               </div>
             </div>
           </m.div>

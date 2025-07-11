@@ -1,62 +1,65 @@
 "use client";
-import { useState } from "react";
-import { FiChevronRight } from "react-icons/fi";
+import { useParams } from "next/navigation";
+import { useMemo, useState } from "react";
 import { m, AnimatePresence } from "framer-motion";
-import { product } from "@/shared/data/MockData"; 
+import {
+  featuredProducts,
+  extendedProducts,
+  product as staticProduct,
+} from "@/shared/data/MockData";
+
+// Собираем все товары в один массив
+const allProducts = [
+  ...featuredProducts,
+  ...extendedProducts.football,
+  ...extendedProducts.basketball,
+  ...extendedProducts.volleyball,
+  ...extendedProducts.equipment,
+  ...extendedProducts.kits,
+];
 
 const ProductPage = () => {
+  const params = useParams();
+  const id = Number(params.id);
+
+  // Находим товар по id
+  const currentProduct = useMemo(
+    () => allProducts.find((p) => p.id === id),
+    [id]
+  );
+
   const [selectedSize, setSelectedSize] = useState("M");
   const [activeTab, setActiveTab] = useState("description");
-  const [selectedColor, setSelectedColor] = useState("BLACK");
+  const [selectedColor, setSelectedColor] = useState(
+    staticProduct.colors[0].name
+  );
 
-  const currentColor = product.colors.find((c) => c.name === selectedColor);
+  const currentColor = staticProduct.colors.find(
+    (c) => c.name === selectedColor
+  );
 
   return (
     <div className="flex flex-col w-screen">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
-        {" "}
-        {/* Хлебные крошки */}
-        <m.nav
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="text-sm text-gray-600 mb-4 flex flex-wrap items-center"
+        {/* Название и хлебные крошки */}
+        <m.h1
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-4xl font-bold mb-4"
         >
-          {product.categoryPath.map((item, index) => (
-            <div key={index} className="flex items-center">
-              <a
-                href={item.link}
-                className="hover:text-orange-500 transition-colors"
-              >
-                {item.name}
-              </a>
-              {index < product.categoryPath.length - 1 && (
-                <FiChevronRight className="mx-2 text-gray-400" />
-              )}
-            </div>
-          ))}
-        </m.nav>
+          {currentProduct.name}
+        </m.h1>
         {/* Основной контент */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
           {/* Блок с изображением */}
           <div className="space-y-4">
             <div className="bg-white p-3 rounded-xl shadow-md relative overflow-hidden">
-              {product.isHit && (
-                <m.div
-                  initial={{ scale: 0.8 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 500 }}
-                  className="absolute top-3 left-3 bg-orange-500 text-white px-2 py-1 rounded-full text-sm font-bold z-10"
-                >
-                  ХИТ
-                </m.div>
-              )}
               <div className="relative h-96">
                 <AnimatePresence mode="wait">
                   <m.img
-                    key={currentColor?.image}
-                    src={currentColor?.image}
-                    alt={product.name}
+                    key={currentColor?.image || currentProduct.image}
+                    src={currentColor?.image || currentProduct.image}
+                    alt={currentProduct.name}
                     className="w-full h-full object-contain absolute inset-0"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -66,51 +69,52 @@ const ProductPage = () => {
                 </AnimatePresence>
               </div>
             </div>
-
-            {/* Выбор цвета */}
-            <m.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg"
-            >
-              <span className="text-md font-medium">Цвет:</span>
-              <div className="flex space-x-2">
-                {product.colors.map((color) => (
-                  <m.button
-                    key={color.name}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => setSelectedColor(color.name)}
-                    className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${
-                      selectedColor === color.name
-                        ? "border-orange-500 scale-110"
-                        : "border-gray-200 hover:border-gray-300"
-                    }`}
-                    style={{ backgroundColor: color.hex }}
-                    title={color.name}
-                  >
-                    {selectedColor === color.name && (
-                      <m.svg
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="w-4 h-4 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={3}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </m.svg>
-                    )}
-                  </m.button>
-                ))}
-              </div>
-            </m.div>
+            {/* Выбор цвета (если есть) */}
+            {staticProduct.colors && (
+              <m.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg"
+              >
+                <span className="text-md font-medium">Цвет:</span>
+                <div className="flex space-x-2">
+                  {staticProduct.colors.map((color) => (
+                    <m.button
+                      key={color.name}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => setSelectedColor(color.name)}
+                      className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${
+                        selectedColor === color.name
+                          ? "border-orange-500 scale-110"
+                          : "border-gray-200 hover:border-gray-300"
+                      }`}
+                      style={{ backgroundColor: color.hex }}
+                      title={color.name}
+                    >
+                      {selectedColor === color.name && (
+                        <m.svg
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="w-4 h-4 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={3}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </m.svg>
+                      )}
+                    </m.button>
+                  ))}
+                </div>
+              </m.div>
+            )}
           </div>
 
           {/* Информация о товаре */}
@@ -121,24 +125,15 @@ const ProductPage = () => {
             className="space-y-4"
           >
             <div>
-              <m.h1
+              <m.h2
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="text-4xl font-bold text-gray-900"
+                className="text-2xl font-bold text-gray-900"
               >
-                {product.name}
-              </m.h1>
-              <m.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                className="text-gray-500 text-md mt-1"
-              >
-                Артикул: {product.article}
-              </m.p>
+                {currentProduct.name}
+              </m.h2>
             </div>
-
             {/* Цена */}
             <m.div
               initial={{ opacity: 0, y: 10 }}
@@ -148,12 +143,13 @@ const ProductPage = () => {
             >
               <div className="flex items-end space-x-3">
                 <span className="text-3xl font-bold text-gray-900">
-                  {product.price.toLocaleString()} ₽
+                  {currentProduct.price}
                 </span>
               </div>
-              <p className="text-green-600 text-md mt-1">В наличии: много</p>
+              <p className="text-green-600 text-md mt-1">
+                В наличии: {currentProduct.quantity}
+              </p>
             </m.div>
-
             {/* Размеры */}
             <m.div
               initial={{ opacity: 0 }}
@@ -164,7 +160,7 @@ const ProductPage = () => {
                 Размер: <span className="font-normal">{selectedSize}</span>
               </h3>
               <div className="grid grid-cols-3 gap-2">
-                {product.sizes.map((size) => (
+                {staticProduct.sizes.map((size) => (
                   <m.button
                     key={size}
                     whileHover={{ scale: 1.05 }}
@@ -181,7 +177,6 @@ const ProductPage = () => {
                 ))}
               </div>
             </m.div>
-
             {/* Описание и характеристики */}
             <m.div
               initial={{ opacity: 0 }}
@@ -217,7 +212,6 @@ const ProductPage = () => {
                   </m.button>
                 </nav>
               </div>
-
               <m.div
                 key={activeTab}
                 initial={{ opacity: 0, y: 5 }}
@@ -227,12 +221,13 @@ const ProductPage = () => {
                 className="py-3"
               >
                 {activeTab === "description" && (
-                  <p className="text-gray-700 text-md">{product.description}</p>
+                  <p className="text-gray-700 text-md">
+                    {staticProduct.description}
+                  </p>
                 )}
-
                 {activeTab === "specs" && (
                   <ul className="space-y-1">
-                    {product.specs.map((spec, i) => (
+                    {staticProduct.specs.map((spec, i) => (
                       <m.li
                         key={i}
                         initial={{ opacity: 0, x: -5 }}
@@ -242,8 +237,7 @@ const ProductPage = () => {
                       >
                         <span className="text-gray-500 w-32 flex-shrink-0">
                           {spec.split(":")[0]}:
-                        </span>{" "}
-                        {/* Уменьшил ширину */}
+                        </span>
                         <span className="text-gray-900">
                           {spec.split(":")[1]}
                         </span>
@@ -255,34 +249,6 @@ const ProductPage = () => {
             </m.div>
           </m.div>
         </div>
-        {/* Похожие товары */}
-        <m.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="mb-8"
-        >
-          <h3 className="text-lg font-bold text-gray-900 mb-4">
-            Другие товары коллекции
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {[1, 2, 3, 4].map((item) => (
-              <m.a
-                key={item}
-                whileHover={{ y: -3 }}
-                href="#"
-                className="bg-white p-2 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow block"
-              >
-                <div className="bg-gray-100 rounded-lg h-32 mb-2"></div>
-                <h4 className="font-medium text-gray-900 text-sm mb-0.5">
-                  Шорты спортивные SPORTIK
-                </h4>
-                <div className="text-orange-500 font-bold text-sm">1 890 ₽</div>
-              </m.a>
-            ))}
-          </div>
-        </m.div>
       </div>
     </div>
   );
