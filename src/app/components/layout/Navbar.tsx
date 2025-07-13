@@ -4,8 +4,12 @@ import { FiPhone, FiSearch } from "react-icons/fi";
 import { m } from "framer-motion";
 import Link from "next/link";
 import { PAGES } from "@/config/pages-class.config";
+import { useAtom } from "jotai";
+import { searchAtom } from "@/store/SearchStore";
 
 function Navbar() {
+  const [, setSearchTerm] = useAtom(searchAtom);
+
   return (
     <div className="sticky top-0 z-100 bg-white shadow-sm">
       <div className="container mx-auto px-4">
@@ -56,12 +60,15 @@ function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             className="text-3xl font-bold text-blue-600 mb-4 md:mb-0"
           >
-            <Link href={PAGES.HOME}>Спортивный сектор</Link>
+            <Link href={PAGES.HOME} onClick={() => setSearchTerm("")}>
+              Спортивный сектор
+            </Link>
           </m.h1>
 
           <div className="flex flex-wrap justify-center gap-4 md:gap-8">
             <Link
               href={PAGES.HOME}
+              onClick={() => setSearchTerm("")}
               className="text-gray-700 hover:text-orange-700 font-medium"
             >
               Главная

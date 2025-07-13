@@ -3,14 +3,15 @@ import { PAGES } from "@/config/pages-class.config";
 import { useDebounce } from "@/app/components/hooks/useDebounce";
 import { m } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import type { ICategory } from "@/shared/types/ICategory.type";
 import { IProduct } from "@/shared/types/IProduct.type";
 import { useCatalogData } from "@/app/components/hooks/useCatalogData";
+import { useAtom } from "jotai";
+import { searchAtom } from "@/store/SearchStore";
 
 export default function Catalog() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useAtom(searchAtom);
   const debounceSearch = useDebounce(searchTerm, 400);
 
   // Получаем данные категорий
@@ -71,7 +72,7 @@ export default function Catalog() {
         </p>
         <div className="flex justify-between items-center">
           <span className="font-bold text-blue-600">
-            ${product.price.toFixed(2)}
+            {product.price.toFixed(2)} ₽
           </span>
           <Link href={PAGES.PRODUCT(product.id)} passHref>
             <m.a
