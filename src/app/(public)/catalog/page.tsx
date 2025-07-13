@@ -5,8 +5,6 @@ import { m } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import type { ICategory } from "@/shared/types/ICategory.type";
 import { IProduct } from "@/shared/types/IProduct.type";
 import { useCatalogData } from "@/app/components/hooks/useCatalogData";

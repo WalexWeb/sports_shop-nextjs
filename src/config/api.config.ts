@@ -1,4 +1,4 @@
-const API_URL = "http://80.253.19.93:8080";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const ENDPOINTS = {
   catalog: {
