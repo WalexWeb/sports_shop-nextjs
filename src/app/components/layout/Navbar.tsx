@@ -2,13 +2,10 @@
 import { FaInstagram, FaTelegram, FaVk, FaWhatsapp } from "react-icons/fa";
 import { FiPhone, FiSearch } from "react-icons/fi";
 import { m } from "framer-motion";
-import { useState } from "react";
 import Link from "next/link";
 import { PAGES } from "@/config/pages-class.config";
 
 function Navbar() {
-  const [searchTerm, setSearchTerm] = useState("");
-
   return (
     <div className="sticky top-0 z-100 bg-white shadow-sm">
       <div className="container mx-auto px-4">
@@ -18,17 +15,6 @@ function Navbar() {
               <FiPhone className="mr-2" />
               <span className="text-xl">+7 (123) 456-78-90</span>
             </div>
-          </div>
-
-          <div className="relative w-full md:w-64">
-            <input
-              type="text"
-              placeholder="Поиск..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-orange-700"
-            />
-            <FiSearch className="absolute left-3 top-3 text-gray-400" />
           </div>
 
           <div className="flex items-center space-x-4 mt-3 md:mt-0">

@@ -3,14 +3,12 @@ import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import {
-  featuredProducts,
   extendedProducts,
   product as staticProduct,
 } from "@/shared/data/MockData";
 
 // Собираем все товары в один массив
 const allProducts = [
-  ...featuredProducts,
   ...extendedProducts.football,
   ...extendedProducts.basketball,
   ...extendedProducts.volleyball,
@@ -37,6 +35,22 @@ const ProductPage = () => {
   const currentColor = staticProduct.colors.find(
     (c) => c.name === selectedColor
   );
+
+  if (!currentProduct) {
+    return (
+      <div className="flex flex-col w-screen">
+        <div className="container mx-auto px-4 py-8 max-w-7xl">
+          <m.h1
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-4xl font-bold mb-4"
+          >
+            Товар не найден
+          </m.h1>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col w-screen">

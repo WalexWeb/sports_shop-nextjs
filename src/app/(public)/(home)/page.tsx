@@ -3,6 +3,8 @@ import Slider from "@/app/components/Sections/Slider";
 import Categories from "@/app/components/Sections/Categories";
 import Products from "@/app/components/Sections/Products";
 import { m } from "framer-motion";
+import Link from "next/link";
+import { PAGES } from "@/config/pages-class.config";
 
 export default function Home() {
   return (
@@ -29,7 +31,7 @@ export default function Home() {
             whileTap={{ scale: 0.95 }}
             className="bg-orange-700 text-white cursor-pointer px-8 py-3 rounded-full font-semibold text-lg hover:bg-orange-700"
           >
-            Смотреть коллекцию
+            <Link href={PAGES.CATALOG}>Смотреть коллекцию</Link>
           </m.button>
         </div>
       </m.div>
@@ -51,16 +53,6 @@ export default function Home() {
             Изготавливаем форму под каждого клиента. Современные технологии и
             индивидуальные решения.
           </p>
-          <m.button
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
-            }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-orange-700 cursor-pointer text-white px-8 py-3 rounded-full font-semibold text-lg hover:bg-orange-700"
-          >
-            Узнать больше
-          </m.button>
         </div>
       </m.div>
 
