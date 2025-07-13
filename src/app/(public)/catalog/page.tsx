@@ -63,11 +63,6 @@ export default function Catalog() {
             className="w-full h-full object-cover"
           />
         )}
-        {index % 3 === 0 && (
-          <div className="absolute top-2 right-2 bg-orange-700 text-white text-xs font-bold px-2 py-1 rounded">
-            {index % 2 === 0 ? "NEW" : "SALE"}
-          </div>
-        )}
       </div>
       <div className="p-4">
         <h3 className="font-bold text-lg mb-1">{product.name}</h3>
@@ -104,13 +99,14 @@ export default function Catalog() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="text-2xl font-bold mb-6 flex items-center"
+        className="text-3xl font-bold mb-6 flex justify-center items-center"
       >
         {category.name}
       </m.h2>
-
       {category.description && (
-        <p className="text-gray-600 mb-6">{category.description}</p>
+        <h2 className="text-gray-600 text-lg mb-4 text-center">
+          {category.description}
+        </h2>
       )}
 
       {/* Продукты основной категории */}
@@ -138,7 +134,7 @@ export default function Catalog() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="text-xl font-bold mb-4 flex items-center"
+              className="text-2xl font-bold mb-4 flex items-center"
             >
               {subcategory.name}
             </m.h3>
@@ -227,7 +223,7 @@ export default function Catalog() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="text-3xl font-bold text-center mb-10"
+                className="text-4xl font-bold text-center mb-10"
               >
                 Категории
               </m.h2>
