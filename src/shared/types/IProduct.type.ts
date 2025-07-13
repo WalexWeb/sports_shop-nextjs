@@ -1,20 +1,15 @@
-interface ISize {
-  size: string;
-  chest: string;
-  waist: string;
-  hips: string;
-}
+import { IProductImage } from "./IProductImage.type";
+import { IProductVariant } from "./IProductVariant.type";
 
 export interface IProduct {
-  id: number;
   name: string;
-  quantity: string;
-  price: string;
-  image: string[];
-  category: string;
   description: string;
-  size: ISize[];
-  color: string;
-  brand: string;
-  material: string;
+  price: number;
+  category_id: number;
+  is_active: boolean;
+  id: number;
+  created_at: string;
+  updated_at: string | null;
+  images: IProductImage[];
+  variants: IProductVariant[];
 }
