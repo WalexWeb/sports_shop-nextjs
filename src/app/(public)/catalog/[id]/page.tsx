@@ -21,7 +21,9 @@ const ProductPage = () => {
       product.variants.length > 0 &&
       selectedVariant === null
     ) {
-      setSelectedVariant(product.variants[0].id);
+      if (product.variants[0]?.id !== undefined) {
+        setSelectedVariant(product.variants[0].id);
+      }
     }
   }, [product, selectedVariant]);
 
@@ -189,7 +191,11 @@ const ProductPage = () => {
                         key={color}
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
-                        onClick={() => setSelectedVariant(variants[0].id)}
+                        onClick={() => {
+                          if (variants[0].id !== undefined) {
+                            setSelectedVariant(variants[0].id);
+                          }
+                        }}
                         className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${
                           isSelected
                             ? "border-orange-500 scale-110"
@@ -270,7 +276,8 @@ const ProductPage = () => {
                         const variant = product.variants.find(
                           (v) => v.size === size
                         );
-                        if (variant) setSelectedVariant(variant.id);
+                        if (variant && typeof variant.id === "number")
+                          setSelectedVariant(variant.id);
                       }}
                       className={`py-2 border rounded-md text-center text-md font-medium transition-colors ${
                         currentVariant?.size === size

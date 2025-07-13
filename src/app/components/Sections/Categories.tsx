@@ -8,7 +8,7 @@ import { useCatalogData } from "../hooks/useCatalogData";
 
 export default function Categories() {
   // Получаем данные категорий
-  const { data: categories = [], isLoading, isError } = useCatalogData();
+  const { data: categories = [] } = useCatalogData();
 
   // Получаем все категории первого уровня
   const getMainCategories = () => {

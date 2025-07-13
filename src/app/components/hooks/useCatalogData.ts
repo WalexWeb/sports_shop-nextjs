@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchCategories = async (): Promise<ICategory[]> => {
-  const response = await axios.get<ICategory[]>(ENDPOINTS.catalog.categories);
+  const response = await axios.get<ICategory[]>(ENDPOINTS.categories.hierarchy);
   return response.data;
 };
 

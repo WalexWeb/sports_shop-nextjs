@@ -5,7 +5,7 @@ import axios from "axios";
 
 const fetchProduct = async (id: number): Promise<IProduct> => {
   const response = await axios.get<IProduct>(
-    `${ENDPOINTS.catalog.products}/${id}`
+    `${ENDPOINTS.products.get}/${id}`
   );
   return response.data;
 };
