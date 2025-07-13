@@ -56,7 +56,7 @@ export default function Home() {
         </div>
       </m.div>
 
-      <Products />
+      {/* <Products /> */}
 
       <div className="bg-gray-100 py-16">
         <div className="container mx-auto px-4 text-center">

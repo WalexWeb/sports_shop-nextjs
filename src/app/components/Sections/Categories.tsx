@@ -1,52 +1,56 @@
 "use client";
 import { useState } from "react";
-import { categories } from "@/shared/data/MockData";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { m } from "framer-motion";
+import Link from "next/link";
+import { useCatalogData } from "../hooks/useCatalogData";
 
 export default function Categories() {
-  const [hoveredItem, setHoveredItem] = useState<number | null>(null);
+  // Получаем данные категорий
+  const { data: categories = [], isLoading, isError } = useCatalogData();
 
-  const pathname = usePathname();
+  // Получаем все категории первого уровня
+  const getMainCategories = () => {
+    return categories.filter((cat) => cat.parent_id === null);
+  };
 
   return (
     <div className="container mx-auto px-4 py-12">
       <h2 className="text-3xl font-bold text-center mb-10">Категории</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
-        {categories.map((category, index) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {getMainCategories().map((category, index) => (
           <m.div
             key={category.id}
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
-            whileHover={{ y: -10 }}
+            whileHover={{ scale: 1.05 }}
             className="relative rounded-xl overflow-hidden shadow-lg bg-white"
           >
-            <div className="h-48 bg-gray-200 flex items-center justify-center">
-              <Image
-                src={category.image}
-                alt={category.name}
-                className="w-full h-full object-cover"
-                width={200}
-                height={200}
-              />
-            </div>
-            <div className="p-4">
-              <h3 className="text-lg font-semibold text-center">
-                {category.name}
-              </h3>
-            </div>
-            {hoveredItem === category.id && (
-              <m.div
-                layoutId="hoverBg"
-                className="absolute inset-0 bg-blue-500 bg-opacity-20"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              />
-            )}
+            <Link href={`#category-${category.id}`} passHref>
+              <div className="h-48 bg-gray-200 flex items-center justify-center">
+                {category.image_url ? (
+                  <img
+                    src={category.image_url}
+                    alt={category.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="text-4xl">📦</div>
+                )}
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-center">
+                  {category.name}
+                </h3>
+                {category.description && (
+                  <p className="text-gray-600 text-sm text-center mt-2 line-clamp-2">
+                    {category.description}
+                  </p>
+                )}
+              </div>
+            </Link>
           </m.div>
         ))}
       </div>
