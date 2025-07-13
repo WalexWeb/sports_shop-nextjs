@@ -1,3 +1,4 @@
+import { ICategory } from "./ICategory.type";
 import { IProductImage } from "./IProductImage.type";
 import { IProductVariant } from "./IProductVariant.type";
 
@@ -12,4 +13,5 @@ export interface IProduct {
   updated_at: string | null;
   images: IProductImage[];
   variants: IProductVariant[];
+  category: ICategory;
 }
